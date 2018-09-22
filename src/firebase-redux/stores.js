@@ -1,3 +1,3 @@
 /* Your store listings are defined here */
-const stores = ['settingsData'];
+const stores = ['profile'];
 export default stores;
