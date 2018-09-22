@@ -1,27 +1,41 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-const SimpleInput = props => {
-  SimpleInput.defaultProps = {
-    updateInput: null,
-    name: '',
+class SimpleInput extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      name: props.name,
+      value: props.value
+    }
   }
 
-  SimpleInput.propTypes = {
-    updateInput: PropTypes.func,
-    name: PropTypes.string,
-    value: PropTypes.string.isRequired
-  };
-
-  const onChange = (event) => {
-    props.updateInput({[event.target.name]: event.target.value});
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if (nextProps.value !== this.state.value) {
+      this.setState({value: nextProps.value});
+    }
   }
 
-  return (
-    <input
-      name={props.name}
-      value={props.value}
-      onChange={(event) => onChange(event)} />
-  );
+  render() {
+    const { updateUsername } = this.props;
+    return (
+      <input
+        name={this.state.name}
+        value={this.state.value}
+        onChange={(event) => updateUsername(event.target.value)} />
+    );
+  }
+
 }
+SimpleInput.defaultProps = {
+  name: '',
+  value: ''
+}
+
+SimpleInput.propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.string,
+  updateUsername: PropTypes.func.isRequired
+};
 export default SimpleInput;
